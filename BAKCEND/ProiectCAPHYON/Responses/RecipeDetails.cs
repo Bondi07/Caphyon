@@ -13,10 +13,12 @@
 
         public float CookingTime { get; set;}
 
-        public List<Collection> Collections { get; set; }
-        public List<DietType> DietTypes { get; set; }
-        public List<Keyword> Keywords { get; set; }
-        public List<Ingredient> Ingredients { get; set; }
+        public string AuthorName { get; set; }  
+
+        public List<string> Collections { get; set; }
+        public List<string> DietTypes { get; set; }
+        public List<string> Keywords { get; set; }
+        public List<string> Ingredients { get; set; }
 
     }
 }

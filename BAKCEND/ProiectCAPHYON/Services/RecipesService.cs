@@ -1,15 +1,11 @@
-﻿using Microsoft.AspNetCore.Routing;
-using Microsoft.VisualBasic;
+﻿using Microsoft.VisualBasic;
 using Neo4j.Driver;
 using ProiectCAPHYON.Configurations;
 using ProiectCAPHYON.Enums;
 using ProiectCAPHYON.Models;
 using ProiectCAPHYON.Requests;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
 using System.Xml.Linq;
-using static Microsoft.Extensions.Logging.EventSource.LoggingEventSource;
+using Collection = ProiectCAPHYON.Models.Collection;
 
 namespace ProiectCAPHYON.Services
 {
@@ -31,17 +27,26 @@ namespace ProiectCAPHYON.Services
         public async Task<RecipeDetails> GetRecipeDetails(int recipeId)
         {
             var recipeDetails = new RecipeDetails();
+
             var query = $@"
-                MATCH (recipe)
+                MATCH (recipe:Recipe {{id: '{recipeId}'}})-[:COLLECTION]->(collection:Collection)
+                MATCH (recipe:Recipe {{id: '{recipeId}'}})-[:DIET_TYPE]->(dietType:DietType)
+                MATCH (recipe:Recipe {{id: '{recipeId}'}})-[:KEYWORD]->(keyword:Keyword)
+                MATCH (recipe:Recipe {{id: '{recipeId}'}})-[:CONTAINS_INGREDIENT]->(ingredient:Ingredient)
+                MATCH (author:Author)-[:WROTE]->(recipe {{id: '{recipeId}'}}) 
+                RETURN 
+                TRIM(recipe.name) AS RecipeName,
+                recipe.preparationTime AS PreparationTime,
+                recipe.description AS Description,
+                recipe.id AS Id,
+                recipe.cookingTime AS CookingTime,
+                recipe.skillLevel AS SkillLevel,
+                COLLECT(DISTINCT collection.name) AS Collections,
+                COLLECT(DISTINCT dietType.name) AS DietTypes,
+                COLLECT(DISTINCT keyword.name) AS Keywords,
+                COLLECT(DISTINCT ingredient.name) AS Ingredients,
+                author.name AS AuthorName";
 
-                WHERE recipe.id = '{recipeId}'
-
-                RETURN TRIM(recipe.name) AS RecipeName,
-                        recipe.preparationTime AS PreparationTime,
-                        recipe.description AS Description,
-                        recipe.id AS Id,
-                        recipe.cookingTime AS CookingTime,
-                        recipe.skillLevel AS SkillLevel";
 
             await using (var session = _driver.AsyncSession())
             {
@@ -56,6 +61,12 @@ namespace ProiectCAPHYON.Services
                     var skillLevel = record["SkillLevel"].As<string>();
                     var cookingTime = record["CookingTime"].As<float>();
 
+                    var collections = record["Collections"].As<List<string>>();
+                    var dietTypes = record["DietTypes"].As<List<string>>();
+                    var keywords = record["Keywords"].As<List<string>>();
+                    var ingredients = record["Ingredients"].As<List<string>>();
+                    var authorName = record["AuthorName"].As<string>();
+
                     recipeDetails = new RecipeDetails
                     {
                         Name = name,
@@ -63,7 +74,13 @@ namespace ProiectCAPHYON.Services
                         PreparationTime = preparationTime,
                         Description = description,
                         SkillLevel = skillLevel,
-                        CookingTime = cookingTime
+                        CookingTime = cookingTime,
+                        Collections = collections,
+                        DietTypes = dietTypes,
+                        Keywords = keywords,
+                        Ingredients = ingredients,
+                        AuthorName = authorName
+                        
                     };
                 }
             }
@@ -75,7 +92,7 @@ namespace ProiectCAPHYON.Services
         public async Task<List<Recipe>> GetRecipes(FilterByIngredientsRequest request)
         {
 
-            var sortOrder = request.SortOptions == SortOptions.Asc ? "ASC" : "DESC";
+            var sortOrder = request.SortRequest.SortOrder == SortOrder.Asc ? "ASC" : "DESC";
             string ingredientsWhereClause = " ";
             string whereClause = " ";
             if (request.Ingredients.Count > 0)
@@ -107,7 +124,7 @@ namespace ProiectCAPHYON.Services
             {ingredientsWhereClause}{recipeWhereClause}
             
             RETURN TRIM(recipe.name) AS RecipeName, recipe.id AS Id, recipe.skillLevel AS SkillLevel, author.name AS AuthorName, COUNT(ingredient) AS IngredientsCount
-            ORDER BY RecipeName {sortOrder}
+            ORDER BY {request.SortRequest.SortBy} {sortOrder}
             
             
             SKIP {request.PageNumber}
@@ -145,7 +162,7 @@ namespace ProiectCAPHYON.Services
         {
             string recipeWhereClause = !string.IsNullOrWhiteSpace(request.RecipeName) ? $" WHERE recipe.name CONTAINS '{request.RecipeName}' " : " ";
 
-            var sortOrder = request.SortOptions == SortOptions.Asc ? "ASC" : "DESC";
+            var sortOrder = request.SortRequest.SortOrder == SortOrder.Asc ? "ASC" : "DESC";
 
             var recipes = new List<Recipe>();
             var matchQuery = $@"
@@ -188,8 +205,7 @@ namespace ProiectCAPHYON.Services
             return recipes;
         }
 
-        //public async Task<List<Recipe>> SortRecipesByNumberOfIngredients(SortRequest request);
+        
 
-        //public async Task<List<Recipe>> SortRecipesBySkillLevel(SortRequest request);
     }
 }
