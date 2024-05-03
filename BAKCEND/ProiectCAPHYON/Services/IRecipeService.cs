@@ -11,9 +11,8 @@ namespace ProiectCAPHYON.Services
 
         Task<List<Recipe>> GetRecipesForAuthor(RecipeForAuthorRequest request);
 
-        //Task<List<Recipe>> SortRecipesByNumberOfIngredients(SortRequest request);
+        Task<List<Recipe>> GetSimilarRecipes(int recipeId);
 
-        //Task<List<Recipe>> SortRecipesBySkillLevel(SortRequest request);
 
 
     }

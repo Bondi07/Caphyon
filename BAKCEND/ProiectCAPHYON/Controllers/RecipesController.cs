@@ -41,6 +41,12 @@ namespace ProiectCAPHYON.Controllers
         }
 
 
+        [HttpGet("Similar")]
+        public async Task<IActionResult> SimilarRecipes(int recipeId)
+        {
+            return Ok(await _recipeService.GetSimilarRecipes(recipeId));
+        }
+
 
     }
 }

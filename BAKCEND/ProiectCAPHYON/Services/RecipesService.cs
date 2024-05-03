@@ -4,6 +4,7 @@ using ProiectCAPHYON.Configurations;
 using ProiectCAPHYON.Enums;
 using ProiectCAPHYON.Models;
 using ProiectCAPHYON.Requests;
+using ProiectCAPHYON.Responses;
 using System.Xml.Linq;
 using Collection = ProiectCAPHYON.Models.Collection;
 
@@ -205,7 +206,173 @@ namespace ProiectCAPHYON.Services
             return recipes;
         }
 
-        
+
+
+        public async Task<List<Recipe>> GetSimilarRecipes(int recipeId)
+        {
+            var similareRecipes = new List<Recipe>();
+
+            var query = $@"
+                MATCH (targetRecipe:Recipe {{id: '101785'}})
+                WITH targetRecipe.skillLevel AS skillLevel, [(targetRecipe)-[:CONTAINS_INGREDIENT]->(ingredient) | ingredient] AS ingredients
+                WITH skillLevel, SIZE(ingredients) AS maxIngredients
+                MATCH (recipe:Recipe)
+                MATCH (author:Author)-[:WROTE]->(recipe)
+                MATCH (recipe)-[:CONTAINS_INGREDIENT]->(ingredient:Ingredient)
+                WITH recipe, COLLECT(ingredient) AS ingredients, skillLevel, maxIngredients, author
+                WHERE recipe.skillLevel = skillLevel AND SIZE(ingredients) <= maxIngredients
+                RETURN TRIM(recipe.name) AS RecipeName, recipe.id AS Id, recipe.skillLevel AS SkillLevel, SIZE(ingredients) AS IngredientsCount, author.name AS AuthorName
+                LIMIT 5;";
+
+
+            await using (var session = _driver.AsyncSession())
+            {
+                var result = await session.RunAsync(query);
+
+                await result.ForEachAsync(record =>
+                {
+                    var name = record["RecipeName"].As<string>();
+                    var authorName = record["AuthorName"].As<string>();
+                    var id = record["Id"].As<long>();
+                    var skillLevel = record["SkillLevel"].As<string>();
+                    var numberOfIngredients = record["IngredientsCount"].As<int>();
+
+                    similareRecipes.Add(new Recipe
+                    {
+                        Name = name,
+                        Author = authorName,
+                        Id = id,
+                        NumberOfIngredients = numberOfIngredients,
+                        SkillLevel = skillLevel
+                    });
+                });
+            }
+
+            return similareRecipes;
+        }
+
+
+
+        public async Task<List<Recipe>> GetTopElements()
+        {
+            var similareRecipes = new List<Recipe>();
+
+            var query = $@"
+                MATCH (targetRecipe:Recipe {{id: '101785'}})
+                WITH targetRecipe.skillLevel AS skillLevel, [(targetRecipe)-[:CONTAINS_INGREDIENT]->(ingredient) | ingredient] AS ingredients
+                WITH skillLevel, SIZE(ingredients) AS maxIngredients
+                MATCH (recipe:Recipe)
+                MATCH (author:Author)-[:WROTE]->(recipe)
+                MATCH (recipe)-[:CONTAINS_INGREDIENT]->(ingredient:Ingredient)
+                WITH recipe, COLLECT(ingredient) AS ingredients, skillLevel, maxIngredients, author
+                WHERE recipe.skillLevel = skillLevel AND SIZE(ingredients) <= maxIngredients
+                RETURN TRIM(recipe.name) AS RecipeName, recipe.id AS Id, recipe.skillLevel AS SkillLevel, SIZE(ingredients) AS IngredientsCount, author.name AS AuthorName
+                LIMIT 5;";
+
+
+            await using (var session = _driver.AsyncSession())
+            {
+                var result = await session.RunAsync(query);
+
+                await result.ForEachAsync(record =>
+                {
+                    var name = record["RecipeName"].As<string>();
+                    var authorName = record["AuthorName"].As<string>();
+                    var id = record["Id"].As<long>();
+                    var skillLevel = record["SkillLevel"].As<string>();
+                    var numberOfIngredients = record["IngredientsCount"].As<int>();
+
+                    similareRecipes.Add(new Recipe
+                    {
+                        Name = name,
+                        Author = authorName,
+                        Id = id,
+                        NumberOfIngredients = numberOfIngredients,
+                        SkillLevel = skillLevel
+                    });
+                });
+            }
+
+            return similareRecipes;
+        }
+
+        private async Task<List<Recipe>> GetMostComplexRecipe()
+        {
+            var recipes = new List<Recipe>();
+
+            var query = $@"
+                MATCH (recipe:Recipe)-[:CONTAINS_INGREDIENT]->(ingredient:Ingredient)
+                WHERE recipe.skillLevel = ""A challenge""
+                WITH recipe, COUNT(ingredient) AS numIngredients
+                ORDER BY recipe.cookingTime DESC, numIngredients DESC
+                LIMIT 5
+                RETURN recipe.name AS RecipeName, recipe.skillLevel AS SkillLevel, recipe.cookingTime AS CookingTime, numIngredients AS NumIngredients;";
+
+
+            await using (var session = _driver.AsyncSession())
+            {
+                var result = await session.RunAsync(query);
+
+                await result.ForEachAsync(record =>
+                {
+                    var name = record["RecipeName"].As<string>();
+                    var skillLevel = record["SkillLevel"].As<string>();
+                    var cookingTime = record["CookingTime"].As<int>();
+                    var numIngredients = record["NumIngredients"].As<int>();
+
+
+                    recipes.Add(new Recipe
+                    {
+                        Name = name,
+                        SkillLevel = skillLevel,
+                        CookingTime = cookingTime,
+                        NumIngrediente = numIngredients
+
+                    });
+                });
+            }
+
+            return recipes;
+        }
+
+        private async Task<List<ProlificAuthor>> GetMostProlificAuthors()
+        {
+            var authors = new List<ProlificAuthor>();
+
+            var query = $@"
+                MATCH (author:Author)-[:WROTE]->(recipe:Recipe)
+                WITH author, COUNT(recipe) AS recipeCount
+                ORDER BY recipeCount DESC
+                RETURN author.name AS AuthorName, recipeCount AS RecipeCount
+                LIMIT 5;";
+
+
+            await using (var session = _driver.AsyncSession())
+            {
+                var result = await session.RunAsync(query);
+
+                await result.ForEachAsync(record =>
+                {
+                    var name = record["AuthorName"].As<string>();
+                    var recipeCount = record["RecipeCount"].As<int>();
+                    
+
+                    authors.Add(new ProlificAuthor
+                    {
+                        Name = name,
+                        RecipeCount = recipeCount
+                        
+                    });
+                });
+            }
+
+            return authors;
+
+
+        }
+
+
+
 
     }
 }
