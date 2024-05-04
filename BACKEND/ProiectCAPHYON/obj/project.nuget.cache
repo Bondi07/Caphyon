@@ -1,0 +1,19 @@
+{
+  "version": 2,
+  "dgSpecHash": "vH+8BxshmsYTNF4AWA4upv1YOKgfZaHAIEzMSEU6RgAq1CUe19sFjqkSbt31ZIZmUM6ANmSqDcCI4Yjnxwhi0w==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\NikB\\Desktop\\skola\\MASTER AN I\\ProiectCAPHYON\\BACKEND\\ProiectCAPHYON\\ProiectCAPHYON.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\NikB\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\5.0.0\\microsoft.bcl.asyncinterfaces.5.0.0.nupkg.sha512",
+    "C:\\Users\\NikB\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
+    "C:\\Users\\NikB\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
+    "C:\\Users\\NikB\\.nuget\\packages\\neo4j.driver\\5.18.1\\neo4j.driver.5.18.1.nupkg.sha512",
+    "C:\\Users\\NikB\\.nuget\\packages\\swashbuckle.aspnetcore\\6.2.3\\swashbuckle.aspnetcore.6.2.3.nupkg.sha512",
+    "C:\\Users\\NikB\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.2.3\\swashbuckle.aspnetcore.swagger.6.2.3.nupkg.sha512",
+    "C:\\Users\\NikB\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.2.3\\swashbuckle.aspnetcore.swaggergen.6.2.3.nupkg.sha512",
+    "C:\\Users\\NikB\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\6.2.3\\swashbuckle.aspnetcore.swaggerui.6.2.3.nupkg.sha512",
+    "C:\\Users\\NikB\\.nuget\\packages\\system.io.pipelines\\7.0.0\\system.io.pipelines.7.0.0.nupkg.sha512",
+    "C:\\Users\\NikB\\.nuget\\packages\\system.valuetuple\\4.5.0\\system.valuetuple.4.5.0.nupkg.sha512"
+  ],
+  "logs": []
+}
