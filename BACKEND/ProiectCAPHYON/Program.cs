@@ -1,4 +1,4 @@
-using Neo4j.Driver;
+﻿using Neo4j.Driver;
 using ProiectCAPHYON.Configurations;
 using ProiectCAPHYON.Services;
 
@@ -36,6 +36,8 @@ builder.Services.AddScoped<IRecipeService, RecipesService>();
 
 
 var app = builder.Build();
+
+app.UseCors();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
