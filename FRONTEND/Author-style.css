@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Poetsen+One&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Poetsen+One&family=Quicksand:wght@300..700&display=swap');
+
 
 *{
     margin: 0;
@@ -19,8 +19,7 @@ a:hover{
     text-decoration: none
 }
 
-
-/* TOP NAVA BAR  */
+/* TOP NAV BAR PENTRU NUME SI POZA  */
 .TopNavBar {
     position: relative; 
     display: flex;
@@ -52,44 +51,37 @@ a:hover{
     font-weight: 400;
     font-style: normal;
 }
-
-/* DETAIL LIST */
-.container{
+/* CONTAINER AUTHOR */
+.containerAuthor{
     margin-top: 150px;
-    margin-left: 100px;
-    margin-bottom: 50px;
+    margin-left: 150px;
 }
-.container h1{
-    font-size: 50px;
-    font-family: "Poetsen One", sans-serif;
-    font-style: normal;
-    border-bottom: black 4px solid;
-    margin-right: 250px;
-    padding: 20px;
-}
-.recipe-details{
-    margin-top: 50px;
-}
-#recipeName{
+
+.containerAuthor h1{
     font-size: 30px;
-    margin-bottom: 50px;
-    margin-left: 50px;
-}
-#description{
-    font-size: 20px;
-    margin-left: 50px;
-}
-.container h2{
-    font-size: 30px;
-    font-family: "Poetsen One", sans-serif;
-    font-style: normal;
-    margin-bottom: 20px;
-}
-.container p{
-    font-size: 20px;
-    margin: 50px;
 
 }
+#recipeList ul{
+    padding-top: 50px;
+    padding-left: 50px;
+    margin-bottom: 50px;
+}
+#recipeList ul li{
+    font-size: 20px;
+    line-height: 35px;
+    
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 

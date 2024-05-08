@@ -6,6 +6,19 @@
     padding: 0;
 }
 
+a{
+    color: black;
+    text-decoration: none;
+}
+a:visited{
+    color: black;
+    text-decoration: none;
+}
+a:hover{
+    color: #00215E;
+    text-decoration: none
+}
+
 /* TOP NAV BAR PENTRU NUME SI POZA  */
 .TopNavBar {
     position: relative; 
@@ -68,7 +81,7 @@
 .search input[type="text"] {
     padding: 8px;
     margin-right: 10px;
-    width: 200px;
+    width: 300px;
     box-sizing: border-box;
     border: none;
     border-radius: 25px;

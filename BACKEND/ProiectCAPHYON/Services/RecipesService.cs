@@ -25,11 +25,12 @@ namespace ProiectCAPHYON.Services
             var recipeDetails = new RecipeDetails();
 
             var query = $@"
-                MATCH (recipe:Recipe {{id: '{recipeId}'}})-[:COLLECTION]->(collection:Collection)
-                MATCH (recipe:Recipe {{id: '{recipeId}'}})-[:DIET_TYPE]->(dietType:DietType)
-                MATCH (recipe:Recipe {{id: '{recipeId}'}})-[:KEYWORD]->(keyword:Keyword)
-                MATCH (recipe:Recipe {{id: '{recipeId}'}})-[:CONTAINS_INGREDIENT]->(ingredient:Ingredient)
-                MATCH (author:Author)-[:WROTE]->(recipe {{id: '{recipeId}'}}) 
+                MATCH (recipe:Recipe {{id: '{recipeId}'}})
+                OPTIONAL MATCH (recipe:Recipe {{id: '{recipeId}'}})-[:COLLECTION]->(collection:Collection)
+                OPTIONAL MATCH (recipe:Recipe {{id: '{recipeId}'}})-[:DIET_TYPE]->(dietType:DietType)
+                OPTIONAL MATCH (recipe:Recipe {{id: '{recipeId}'}})-[:KEYWORD]->(keyword:Keyword)
+                OPTIONAL MATCH (recipe:Recipe {{id: '{recipeId}'}})-[:CONTAINS_INGREDIENT]->(ingredient:Ingredient)
+                OPTIONAL MATCH (author:Author)-[:WROTE]->(recipe {{id: '{recipeId}'}}) 
                 RETURN 
                 TRIM(recipe.name) AS RecipeName,
                 recipe.preparationTime AS PreparationTime,
@@ -53,11 +54,11 @@ namespace ProiectCAPHYON.Services
                     recipeDetails = new RecipeDetails
                     {
                         Name = record["RecipeName"].As<string>(),
-                        Id = record["Id"].As<long>(),
-                        PreparationTime = record["PreparationTime"].As<int>(),
+                        Id = recipeId,
+                        PreparationTime = record["PreparationTime"]?.As<int>() ?? 0,
                         Description = record["Description"].As<string>(),
                         SkillLevel = record["SkillLevel"].As<string>(),
-                        CookingTime = record["CookingTime"].As<float>(),
+                        CookingTime = record["CookingTime"]?.As<float>()?? 0,
                         Collections = record["Collections"].As<List<string>>(),
                         DietTypes = record["DietTypes"].As<List<string>>(),
                         Keywords = record["Keywords"].As<List<string>>(),
@@ -105,7 +106,7 @@ namespace ProiectCAPHYON.Services
             MATCH (author:Author)-[:WROTE]->(recipe)
             MATCH (recipe)-[:CONTAINS_INGREDIENT]->(ingredient:Ingredient)
             WITH recipe, author, ingredient
-            {ingredientsWhereClause}{recipeWhereClause}
+            {whereClause}
             
             RETURN TRIM(recipe.name) AS RecipeName, recipe.id AS Id, recipe.skillLevel AS SkillLevel, author.name AS AuthorName, COUNT(ingredient) AS IngredientsCount
             ORDER BY {request.SortRequest.SortBy} {sortOrder}
@@ -144,8 +145,9 @@ namespace ProiectCAPHYON.Services
 
             var recipes = new List<Recipe>();
             var matchQuery = $@"
-                MATCH (a:Author {{ name: '{request.AuthorName}'}})-[:WROTE]->(recipe:Recipe)
-                MATCH (recipe)-[:CONTAINS_INGREDIENT]->(ingredient:Ingredient)
+                MATCH (a:Author {{name: '{request.AuthorName}'}})
+                OPTIONAL MATCH (a:Author {{ name: '{request.AuthorName}'}})-[:WROTE]->(recipe:Recipe)
+                OPTIONAL MATCH (recipe)-[:CONTAINS_INGREDIENT]->(ingredient:Ingredient)
                 
                 ";
             if (!string.IsNullOrWhiteSpace(request.RecipeName))
@@ -190,7 +192,7 @@ namespace ProiectCAPHYON.Services
                 WITH skillLevel, SIZE(ingredients) AS maxIngredients
                 MATCH (recipe:Recipe)
                 MATCH (author:Author)-[:WROTE]->(recipe)
-                MATCH (recipe)-[:CONTAINS_INGREDIENT]->(ingredient:Ingredient)
+                OPTIONAL MATCH (recipe)-[:CONTAINS_INGREDIENT]->(ingredient:Ingredient)
                 WITH recipe, COLLECT(ingredient) AS ingredients, skillLevel, maxIngredients, author
                 WHERE recipe.skillLevel = skillLevel AND SIZE(ingredients) <= maxIngredients
                 RETURN TRIM(recipe.name) AS RecipeName, recipe.id AS Id, recipe.skillLevel AS SkillLevel, SIZE(ingredients) AS IngredientsCount, author.name AS AuthorName

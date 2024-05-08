@@ -55,9 +55,10 @@
 // }
 
 
-
+/* ####################################################################################################### */
 
 /* PAGIANTION */
+
 let currentPage = 1;
 const pageSize = 20; 
 
@@ -97,7 +98,7 @@ function fetchAndRenderRecipes(pageNumber) {
                 out += `
                     <tr>
                         <td><a href="RecipeDetails.html?id=${item.id}">${item.name}</a></td>
-                        <td>${item.author}</td>
+                        <td><a href="Author.html?author=${encodeURIComponent(item.author)}">${item.author}</a></td>
                         <td>${item.numberOfIngredients}</td>
                         <td>${item.skillLevel}</td>
                     </tr>
@@ -146,6 +147,65 @@ document.getElementById('nextPage').addEventListener('click', () => {
 // Fetch and render recipes for the initial page load
 fetchAndRenderRecipes(currentPage);
 updatePrevButton(); 
+
+
+
+/* SEARCH FUNCTION */
+
+document.addEventListener('DOMContentLoaded', function() {
+    async function searchSimilarRecipes() {
+        const recipeName = document.getElementById('recipeName').value.trim();
+
+        const requestBody = {
+            RecipeName: recipeName
+        };
+
+        const response = await fetch('https://localhost:7012/api/Recipes/All', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestBody)
+        });
+
+        const recipes = await response.json();
+
+        // Check if 'recipeBody' element exists before updating its innerHTML
+        const recipeBody = document.getElementById('recipeBody');
+        if (recipeBody) {
+            recipeBody.innerHTML = ''; // Clear previous search results
+
+            recipes.forEach(recipe => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><a href="RecipeDetails.html?id=${recipe.Id}">${recipe.Name}</a></td>
+                    <td>${recipe.Author}</td>
+                    <td>${recipe.NumberOfIngredients}</td>
+                    <td>${recipe.SkillLevel}</td>
+                `;
+                recipeBody.appendChild(row);
+            });
+        } else {
+            console.error("Element with ID 'recipeBody' not found.");
+        }
+    }
+
+    document.getElementById('searchButton').addEventListener('click', searchSimilarRecipes);
+
+});
+
+
+
+/* AUTHOR COLUM PAGE  */
+
+
+// Function to handle click on author's name
+function handleAuthorClick(authorName) {
+    // Redirect to Author.html page with author's name as query parameter
+    window.location.href = `Author.html?author=${encodeURIComponent(authorName)}`;
+}
+
+
 
 
 

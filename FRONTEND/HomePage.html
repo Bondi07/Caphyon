@@ -20,12 +20,12 @@
     </div>
 
     <div class="search">
-        <input type="text" id="searchInput" placeholder="Search...">
-        <button onclick="searchFunction()"><img src="./PICTURES/search.png" alt="search logo" width="30px" height="30px"></button>
+        <input type="text" id="recipeName" placeholder="Enter recipe name...">
+        <button id="searchButton" onclick="searchSimilarRecipes()"><img src="./PICTURES/search.png" alt="search logo" width="30px" height="30px"></button>
     </div>
 
     <div class="tableOfRecipes">
-        <table border="1">
+        <table id="recipeTable" border="1">
             <thead>
                 <tr>
                     <th>Name</th>
@@ -37,7 +37,7 @@
             <tbody id="recipeBody">
                 <tr>
                     <td><a href="RecipeDetails.html"></a></td>
-                    <td></td>
+                    <td><a href="Author.html?author=AuthorName" onclick="handleAuthorClick('AuthorName')"></a></td>
                     <td></td>
                     <td></td>
                 </tr>
@@ -61,6 +61,5 @@
 
 
     <script src="HomePage.js"></script>
-    
 </body>
 </html>
