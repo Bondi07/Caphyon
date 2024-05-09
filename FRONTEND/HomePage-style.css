@@ -116,7 +116,7 @@ a:hover{
     margin-right: 150px;
 }
 
-/* TABEL DE RECETE */
+/* TABLE OF RECIPES */
 .container {
     display: flex;
     justify-content: space-between;
@@ -140,10 +140,78 @@ a:hover{
     padding: 10px; 
     border: 1px solid black; 
     text-align: center; 
-    width: 20%;
+}
+.tableOfRecipes td:nth-child(1) {
+    width: 40%;
+}
+.tableOfRecipes td:nth-child(2) {
+    width: 30%;
+}
+.tableOfRecipes td:nth-child(3) {
+    width: 15%;
+}
+.tableOfRecipes td:nth-child(4) {
+    width: 15%;
+}
+.tableOfRecipes h2{
+    margin-top: 50px;
+    margin-bottom: 50px;
+    margin-left: 50px;
+    font-size: 40px;
+    font-family: "Poetsen One", sans-serif;
+    font-weight: 300;
+    font-style: normal;
 }
 
 
+
+/* TOP ELEMENT TABLE */
+
+.topElementsTable{
+    margin-right: 50px;
+}
+.topElementsTable h2{
+    margin-top: 50px;
+    margin-bottom: 50px;
+    font-size: 40px;
+    font-family: "Poetsen One", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+}
+.topElementsTable th,
+.topElementsTable td {
+    padding: 10px;
+    border: 1px solid black;
+    text-align: center;
+}
+
+/* Set width for Rank and Top Ingredients */
+.topElementsTable th:nth-child(1),
+.topElementsTable td:nth-child(1),
+.topElementsTable th:nth-child(2),
+.topElementsTable td:nth-child(2) {
+    width: 15%;
+}
+
+/* Set width for Recipe Count */
+.topElementsTable th:nth-child(3),
+.topElementsTable td:nth-child(3),
+.topElementsTable th:nth-child(5),
+.topElementsTable td:nth-child(5) {
+    width: 15%;
+}
+
+/* Set width for Top Authors */
+.topElementsTable th:nth-child(4),
+.topElementsTable td:nth-child(4) {
+    width: 20%;
+}
+
+/* Set width for Top Recipes */
+.topElementsTable th:nth-child(6),
+.topElementsTable td:nth-child(6) {
+    width: 50%;
+}
 
 /* PAGINARE */
 #pagination {

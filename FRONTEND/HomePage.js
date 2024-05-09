@@ -57,7 +57,7 @@
 
 /* ####################################################################################################### */
 
-/* PAGIANTION */
+/* PAGIANTION AND TABLE CONTENT */
 
 let currentPage = 1;
 const pageSize = 20; 
@@ -81,6 +81,7 @@ function fetchAndRenderRecipes(pageNumber) {
             let recipes = JSON.parse(this.responseText);
 
             let out = `
+                <h2>Table of Recipes:</h2>
                 <div class="tableOfRecipes">
                     <table>
                         <thead>
@@ -116,35 +117,57 @@ function fetchAndRenderRecipes(pageNumber) {
     }
 }
 
-// Function to disable or enable the previous page button and update its style
+
+/* NEXT AND PREVIOUS BUTTONS */
+
+function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
 function updatePrevButton() {
     const prevPageButton = document.getElementById('prevPage');
     if (currentPage === 1) {
         prevPageButton.disabled = true;
-        prevPageButton.style.backgroundColor = 'lightgrey'; // Change the background color
-        prevPageButton.style.cursor = 'not-allowed'; // Change cursor to indicate it's not clickable
+        prevPageButton.style.backgroundColor = 'lightgrey'; 
+        prevPageButton.style.cursor = 'not-allowed'; 
     } else {
         prevPageButton.disabled = false;
-        prevPageButton.style.backgroundColor = '#4CAF50'; // Reset background color
-        prevPageButton.style.cursor = 'pointer'; // Reset cursor
+        prevPageButton.style.backgroundColor = '#4CAF50'; 
+        prevPageButton.style.cursor = 'pointer'; 
     }
+    scrollToTop(); 
 }
+
+function updateNextButton() {
+    const nextPageButton = document.getElementById('nextPage');
+    if (currentPage === totalPages) {
+        nextPageButton.disabled = true;
+        nextPageButton.style.backgroundColor = 'lightgrey'; 
+        nextPageButton.style.cursor = 'not-allowed'; 
+    } else {
+        nextPageButton.disabled = false;
+        nextPageButton.style.backgroundColor = '#4CAF50'; 
+        nextPageButton.style.cursor = 'pointer'; 
+    }
+    scrollToTop(); 
+}
+
 
 document.getElementById('prevPage').addEventListener('click', () => {
     if (currentPage > 1) {
         currentPage--;
         fetchAndRenderRecipes(currentPage);
-        updatePrevButton(); // Update the style after changing the page
+        updatePrevButton(); 
     }
 });
 
 document.getElementById('nextPage').addEventListener('click', () => {
     currentPage++;
     fetchAndRenderRecipes(currentPage);
-    updatePrevButton(); // Update the style after changing the page
+    updatePrevButton(); 
 });
 
-// Fetch and render recipes for the initial page load
+
 fetchAndRenderRecipes(currentPage);
 updatePrevButton(); 
 
@@ -170,10 +193,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const recipes = await response.json();
 
-        // Check if 'recipeBody' element exists before updating its innerHTML
         const recipeBody = document.getElementById('recipeBody');
         if (recipeBody) {
-            recipeBody.innerHTML = ''; // Clear previous search results
+            recipeBody.innerHTML = ''; 
 
             recipes.forEach(recipe => {
                 const row = document.createElement('tr');
@@ -198,13 +220,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
 /* AUTHOR COLUM PAGE  */
 
-
-// Function to handle click on author's name
 function handleAuthorClick(authorName) {
-    // Redirect to Author.html page with author's name as query parameter
     window.location.href = `Author.html?author=${encodeURIComponent(authorName)}`;
 }
-
 
 
 /* FILTER BY INGREDIENT  */
@@ -319,17 +337,14 @@ window.addEventListener('load', async () => {
 
 
 window.onload = function () {
-    // Fetch data for top elements
     fetchTopElements()
         .then(topElements => {
-            // Update HTML with top elements data
             updateTopElementsTable(topElements);
         })
         .catch(error => {
             console.error('Error fetching top elements:', error);
         });
 
-    // Function to fetch top elements data
     async function fetchTopElements() {
         try {
             const response = await fetch('https://localhost:7012/api/Recipes/TopElements');
@@ -343,13 +358,12 @@ window.onload = function () {
         }
     }
 
-    // Function to update HTML with top elements data
+
     function updateTopElementsTable(topElements) {
         const topElementsTable = document.getElementById('topElementsTable');
         const topElementsBody = document.getElementById('topElementsBody');
-        topElementsBody.innerHTML = ''; // Clear previous data
+        topElementsBody.innerHTML = ''; 
 
-        // Add rows for top ingredients
         topElements.ingredients.forEach((ingredient, index) => {
             const row = topElementsBody.insertRow();
             const rankCell = row.insertCell(0);
@@ -360,7 +374,6 @@ window.onload = function () {
             recipeCountCell.textContent = ingredient.recipeCount;
         });
 
-        // Add rows for top authors
         topElements.authors.forEach((author, index) => {
             const row = topElementsBody.rows[index];
             if (!row) {
@@ -372,7 +385,7 @@ window.onload = function () {
             recipeCountCell.textContent = author.recipeCount;
         });
 
-        // Add rows for top recipes
+
         topElements.recipes.forEach((recipe, index) => {
             const row = topElementsBody.rows[index];
             if (!row) {
