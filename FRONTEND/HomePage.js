@@ -175,6 +175,8 @@ updatePrevButton();
 
 /* SEARCH FUNCTION */
 
+
+
 document.addEventListener('DOMContentLoaded', function() {
     async function searchSimilarRecipes() {
         const recipeName = document.getElementById('recipeName').value.trim();
@@ -201,7 +203,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const row = document.createElement('tr');
                 row.innerHTML = `
                     <td><a href="RecipeDetails.html?id=${recipe.Id}">${recipe.Name}</a></td>
-                    <td>${recipe.Author}</td>
+                    <td><a href="Author.html?author=${encodeURIComponent(recipe.author)}">${recipe.author}</a></td>
                     <td>${recipe.NumberOfIngredients}</td>
                     <td>${recipe.SkillLevel}</td>
                 `;
@@ -212,6 +214,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    // Add event listener to search button
     document.getElementById('searchButton').addEventListener('click', searchSimilarRecipes);
 
 });
@@ -220,9 +223,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
 /* AUTHOR COLUM PAGE  */
 
+// Function to handle author click event
 function handleAuthorClick(authorName) {
-    window.location.href = `Author.html?author=${encodeURIComponent(authorName)}`;
+    // Redirect to author page with authorName parameter
+    window.location.href = `author.html?name=${encodeURIComponent(authorName)}`;
 }
+
 
 
 /* FILTER BY INGREDIENT  */
@@ -275,13 +281,13 @@ async function filterByIngredients() {
     const filterInput = document.getElementById('filterBy');
     const ingredient = filterInput.value.trim();
 
-    const filter = { ingredients: [ingredient] };
+    // const ingredients = { ingredients: [ingredient] };
 
     const pageNumber = 1;
     const pageSize = 20;
 
     try {
-        const recipesData = await fetchRecipes(pageNumber, pageSize, filter);
+        const recipesData = await fetchRecipes(pageNumber, pageSize, [ingredient]);
         if (recipesData) {
             const recipes = recipesData.recipes;
             updateRecipeTable(recipes);
@@ -292,13 +298,13 @@ async function filterByIngredients() {
 }
 
 // Function to fetch recipes from the backend API
-async function fetchRecipes(pageNumber = 1, pageSize = 20, filter = {}) {
+async function fetchRecipes(pageNumber = 1, pageSize = 20, ingredients = {}) {
     const url = 'https://localhost:7012/api/Recipes/All';
     try {
         const requestBody = {
             pageNumber: pageNumber,
             pageSize: pageSize,
-            filter: filter
+            ingredients: ingredients
         };
 
         const response = await fetch(url, {

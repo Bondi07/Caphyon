@@ -52,12 +52,12 @@ a:hover{
     font-style: normal;
 }
 /* CONTAINER AUTHOR */
-.containerAuthor{
+.tableOfAuthorsRecipes{
     margin-top: 150px;
     margin-left: 150px;
 }
 
-.containerAuthor h1{
+.tableOfAuthorsRecipes h1{
     font-size: 30px;
 
 }

@@ -14,10 +14,24 @@
         <h1>Recipes Glossary</h1>
     </div>
 
-    <div class="containerAuthor">
-        <h1>Recipes by: <span id="authorName"></span></h1>
-        <div id="recipeList"></div>
+    <div class="tableOfAuthorsRecipes">
+        <h2>Author's Name: <span id="authorName"></span></h2>
+        <table id="authorsRecipeTable" border="1">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Number of Ingredients</th>
+                    <th>Skill Level</th>
+                </tr>
+            </thead>
+            <tbody id="authorsRecipeBody">
 
+            </tbody>
+        </table>
+    </div>
+    <div id="pagination">
+        <button id="prevPage">Previous Page</button>
+        <button id="nextPage">Next Page</button>
     </div>
 
 

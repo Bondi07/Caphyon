@@ -52,11 +52,10 @@ window.onload = function () {
             fetchSimilarRecipes(recipeId)
                 .then(similarRecipes => {
                     const similarRecipesList = document.getElementById('similarRecipes');
-                    similarRecipesList.innerHTML = ''; // Clear previous list
+                    similarRecipesList.innerHTML = ''; 
                     similarRecipes.forEach(similarRecipe => {
                         const li = document.createElement('li');
-                        const similarityFactor = calculateSimilarity(recipeDetails, similarRecipe) * 100; // Calculate similarity factor
-                        li.textContent = `${similarRecipe.name} (Ingredients: ${similarRecipe.numberOfIngredients}, Skill Level: ${similarRecipe.skillLevel}, Similarity: ${similarityFactor.toFixed(2)}%)`; // Display number of ingredients, skill level, and similarity factor
+                        li.textContent = `${similarRecipe.name} (Ingredients: ${similarRecipe.numberOfIngredients}, Skill Level: ${similarRecipe.skillLevel})`;
                         similarRecipesList.appendChild(li);
                     });
                 })

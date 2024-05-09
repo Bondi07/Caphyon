@@ -187,7 +187,7 @@ namespace ProiectCAPHYON.Services
             var similareRecipes = new List<Recipe>();
 
             var query = $@"
-                MATCH (targetRecipe:Recipe {{id: '101785'}})
+                MATCH (targetRecipe:Recipe {{id: '{recipeId}'}})
                 WITH targetRecipe.skillLevel AS skillLevel, [(targetRecipe)-[:CONTAINS_INGREDIENT]->(ingredient) | ingredient] AS ingredients
                 WITH skillLevel, SIZE(ingredients) AS maxIngredients
                 MATCH (recipe:Recipe)
