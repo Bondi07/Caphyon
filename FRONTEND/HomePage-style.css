@@ -74,10 +74,14 @@ a:hover{
 /* SEARCH */
 .search{
     margin-top: 50px;
-    padding-left: 150px;
     display: flex;
+    justify-content: space-between
 }
-
+.search .left,
+.search .right {
+    display: flex;
+    align-items: center; 
+}
 .search input[type="text"] {
     padding: 8px;
     margin-right: 10px;
@@ -100,13 +104,30 @@ a:hover{
     align-items: center;
     background-color: transparent; 
     border: none; 
+    margin-left: 10px; 
+}
+.search input[type="text"]::placeholder {
+    text-align: center;
+}
+.left{
+    margin-left: 150px;
+}
+.right{
+    margin-right: 150px;
 }
 
 /* TABEL DE RECETE */
+.container {
+    display: flex;
+    justify-content: space-between;
+}
+.topElementsTable {
+    width: 50%; 
+}
 
 .tableOfRecipes {
-    margin: 0 auto;  
-    width: 80%; 
+    margin-left: 80px;
+    width: 60%; 
 }
 
 .tableOfRecipes table {

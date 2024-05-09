@@ -73,6 +73,31 @@ a:hover{
 }
 
 
+/* PAGINARE */
+#pagination {
+    text-align: center;
+    margin: 50px;
+}
+
+#pagination button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 16px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 15px;
+    margin: 10px 5px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition-duration: 0.4s;
+}
+
+#pagination button:hover {
+    background-color: #0A6847;
+}
+
 
 
 
