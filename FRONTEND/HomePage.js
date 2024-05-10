@@ -1,73 +1,27 @@
-
-/* AFISAREA RECETELOR */
-// let http = new XMLHttpRequest();
-
-// let data = {
-//     "pageNumber": 1,
-//     "pageSize": 20
-// };
-
-// let jsonData = JSON.stringify(data);
-
-// http.open('POST', 'https://localhost:7012/api/Recipes/All', true);
-// http.setRequestHeader('Content-Type', 'application/json');
-// http.send(jsonData); 
-
-// http.onload = function(){
-
-//     if(this.readyState == 4 && this.status == 200){
-
-//         let recipes = JSON.parse(this.responseText);
-
-//         let out = `
-//             <div class="tableOfRecipes">
-//                 <table>
-//                     <thead>
-//                         <tr>
-//                             <th>Name</th>
-//                             <th>Author</th>
-//                             <th>Number of Ingredients</th>
-//                             <th>Skill Level</th>
-//                         </tr>
-//                     </thead>
-//                     <tbody>
-//         `;
-        
-//         for(let item of recipes){
-//             out += `
-//                 <tr>
-//                     <td>${item.name}</td>
-//                     <td>${item.author}</td>
-//                     <td>${item.numberOfIngredients}</td>
-//                     <td>${item.skillLevel}</td>
-//                 </tr>
-//             `; 
-//         }
-
-//         out += `
-//                     </tbody>
-//                 </table>
-//             </div>
-//         `;
-        
-//         document.querySelector(".tableOfRecipes").innerHTML = out;
-//     }
-// }
-
-
-/* ####################################################################################################### */
+/* HOME PAGE  */
 
 /* PAGIANTION AND TABLE CONTENT */
 
 let currentPage = 1;
 const pageSize = 20; 
+let recipeName = "";
+let sortOrder = 0;
+let sortBy = "RecipeName";
+let ingredients = [];
+
 
 function fetchAndRenderRecipes(pageNumber) {
     let http = new XMLHttpRequest();
 
     let data = {
         "pageNumber": pageNumber,
-        "pageSize": pageSize
+        "pageSize": pageSize,
+        "recipeName": recipeName,
+        "sortRequest": {
+            "sortOrder": sortOrder,
+            "sortBy": sortBy
+        },
+        "ingredients": ingredients
     };
 
     let jsonData = JSON.stringify(data);
@@ -116,7 +70,6 @@ function fetchAndRenderRecipes(pageNumber) {
         }
     }
 }
-
 
 /* NEXT AND PREVIOUS BUTTONS */
 
@@ -167,168 +120,27 @@ document.getElementById('nextPage').addEventListener('click', () => {
     updatePrevButton(); 
 });
 
-
 fetchAndRenderRecipes(currentPage);
 updatePrevButton(); 
 
 
-
-/* SEARCH FUNCTION */
-
-
-
-document.addEventListener('DOMContentLoaded', function() {
-    async function searchSimilarRecipes() {
-        const recipeName = document.getElementById('recipeName').value.trim();
-
-        const requestBody = {
-            RecipeName: recipeName
-        };
-
-        const response = await fetch('https://localhost:7012/api/Recipes/All', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(requestBody)
-        });
-
-        const recipes = await response.json();
-
-        const recipeBody = document.getElementById('recipeBody');
-        if (recipeBody) {
-            recipeBody.innerHTML = ''; 
-
-            recipes.forEach(recipe => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td><a href="RecipeDetails.html?id=${recipe.Id}">${recipe.Name}</a></td>
-                    <td><a href="Author.html?author=${encodeURIComponent(recipe.author)}">${recipe.author}</a></td>
-                    <td>${recipe.NumberOfIngredients}</td>
-                    <td>${recipe.SkillLevel}</td>
-                `;
-                recipeBody.appendChild(row);
-            });
-        } else {
-            console.error("Element with ID 'recipeBody' not found.");
-        }
-    }
-
-    // Add event listener to search button
-    document.getElementById('searchButton').addEventListener('click', searchSimilarRecipes);
-
-});
-
-
-
 /* AUTHOR COLUM PAGE  */
-
-// Function to handle author click event
 function handleAuthorClick(authorName) {
-    // Redirect to author page with authorName parameter
     window.location.href = `author.html?name=${encodeURIComponent(authorName)}`;
 }
 
 
+/* FILTER BY INGREDIENT AND SEARCH FUNCTION */
 
-/* FILTER BY INGREDIENT  */
+async function filterRecipes() {
+    const filterByInput = document.getElementById('filterBy').value.trim();
+    const listOfIngredients = filterByInput.split(',').map(ingredient => ingredient.trim());
+    ingredients = listOfIngredients;
+    recipeName = document.getElementById('recipeName').value.trim();
 
-
-// Function to update the table with recipes
-function updateRecipeTable(recipes) {
-    const tableBody = document.getElementById('recipeBody');
-    if (!tableBody) {
-        console.error('Table body element not found');
-        return;
-    }
-    
-    // Remove existing rows
-    while (tableBody.firstChild) {
-        tableBody.removeChild(tableBody.firstChild);
-    }
-
-    recipes.forEach(recipe => {
-        const row = document.createElement('tr');
-
-        const nameCell = document.createElement('td');
-        nameCell.textContent = recipe.Name;
-        row.appendChild(nameCell);
-
-        const authorCell = document.createElement('td');
-        const authorLink = document.createElement('a');
-        authorLink.textContent = recipe.Author;
-        authorLink.href = 'Author.html?author=' + encodeURIComponent(recipe.Author);
-        authorLink.onclick = function() {
-            handleAuthorClick(recipe.Author);
-        };
-        authorCell.appendChild(authorLink);
-        row.appendChild(authorCell);
-
-        const ingredientsCell = document.createElement('td');
-        ingredientsCell.textContent = recipe.NumberOfIngredients;
-        row.appendChild(ingredientsCell);
-
-        const skillLevelCell = document.createElement('td');
-        skillLevelCell.textContent = recipe.SkillLevel;
-        row.appendChild(skillLevelCell);
-
-        tableBody.appendChild(row);
-    });
+    fetchAndRenderRecipes(1);
 }
 
-// Function to handle filter button click event
-async function filterByIngredients() {
-    const filterInput = document.getElementById('filterBy');
-    const ingredient = filterInput.value.trim();
-
-    // const ingredients = { ingredients: [ingredient] };
-
-    const pageNumber = 1;
-    const pageSize = 20;
-
-    try {
-        const recipesData = await fetchRecipes(pageNumber, pageSize, [ingredient]);
-        if (recipesData) {
-            const recipes = recipesData.recipes;
-            updateRecipeTable(recipes);
-        }
-    } catch (error) {
-        console.error('Error:', error);
-    }
-}
-
-// Function to fetch recipes from the backend API
-async function fetchRecipes(pageNumber = 1, pageSize = 20, ingredients = {}) {
-    const url = 'https://localhost:7012/api/Recipes/All';
-    try {
-        const requestBody = {
-            pageNumber: pageNumber,
-            pageSize: pageSize,
-            ingredients: ingredients
-        };
-
-        const response = await fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(requestBody)
-        });
-
-        if (response.ok) {
-            const data = await response.json();
-            return data;
-        } else {
-            console.error('Failed to fetch recipes:', response.statusText);
-            return null;
-        }
-    } catch (error) {
-        console.error('Error fetching recipes:', error);
-        return null;
-    }
-}
-
-// Fetch recipes and update filter input on page load
 window.addEventListener('load', async () => {
     const recipesData = await fetchRecipes();
     if (recipesData) {
@@ -340,8 +152,6 @@ window.addEventListener('load', async () => {
 
 
 /* TOP 5 ELEMENTS  */
-
-
 window.onload = function () {
     fetchTopElements()
         .then(topElements => {
@@ -364,42 +174,75 @@ window.onload = function () {
         }
     }
 
-
     function updateTopElementsTable(topElements) {
-        const topElementsTable = document.getElementById('topElementsTable');
-        const topElementsBody = document.getElementById('topElementsBody');
-        topElementsBody.innerHTML = ''; 
+        updateIngredientsTable(topElements.ingredients);
+        updateAuthorsTable(topElements.authors);
+        updateRecipesTable(topElements.recipes);
+    }
 
-        topElements.ingredients.forEach((ingredient, index) => {
-            const row = topElementsBody.insertRow();
+    function updateIngredientsTable(ingredients) {
+        const topIngredientsTable = document.getElementById('topIngredientsTable');
+        const topIngredientsBody = document.getElementById('topIngredientsBody');
+        topIngredientsBody.innerHTML = '';
+
+        ingredients.forEach((ingredient, index) => {
+            const row = topIngredientsBody.insertRow();
             const rankCell = row.insertCell(0);
             rankCell.textContent = index + 1;
-            const ingredientsCell = row.insertCell(1);
-            ingredientsCell.textContent = ingredient.name;
+            const nameCell = row.insertCell(1);
+            nameCell.textContent = ingredient.name;
             const recipeCountCell = row.insertCell(2);
             recipeCountCell.textContent = ingredient.recipeCount;
         });
+    }
 
-        topElements.authors.forEach((author, index) => {
-            const row = topElementsBody.rows[index];
-            if (!row) {
-                row = topElementsBody.insertRow();
-            }
-            const authorsCell = row.insertCell(3);
-            authorsCell.textContent = author.name;
-            const recipeCountCell = row.insertCell(4);
+    function updateAuthorsTable(authors) {
+        const topAuthorsTable = document.getElementById('topAuthorsTable');
+        const topAuthorsBody = document.getElementById('topAuthorsBody');
+        topAuthorsBody.innerHTML = '';
+    
+        authors.forEach((author, index) => {
+            const row = topAuthorsBody.insertRow();
+            const rankCell = row.insertCell(0);
+            rankCell.textContent = index + 1;
+    
+            const nameCell = row.insertCell(1);
+            const authorLink = document.createElement('a');
+            authorLink.href = `Author.html?author=${encodeURIComponent(author.name)}`;
+            authorLink.textContent = author.name;
+            nameCell.appendChild(authorLink);
+    
+            const recipeCountCell = row.insertCell(2);
             recipeCountCell.textContent = author.recipeCount;
         });
+    }
+    
+    function updateRecipesTable(recipes) {
+        const topRecipesTable = document.getElementById('topRecipesTable');
+        const topRecipesBody = document.getElementById('topRecipesBody');
+        topRecipesBody.innerHTML = '';
 
+        recipes.forEach((recipe, index) => {
+            const row = topRecipesBody.insertRow();
+            const rankCell = row.insertCell(0);
+            rankCell.textContent = index + 1;
 
-        topElements.recipes.forEach((recipe, index) => {
-            const row = topElementsBody.rows[index];
-            if (!row) {
-                row = topElementsBody.insertRow();
-            }
-            const recipesCell = row.insertCell(5);
-            recipesCell.textContent = recipe.name;
+            const nameCell = row.insertCell(1);
+            const recipeLink = document.createElement('a');
+            recipeLink.href = `RecipeDetails.html?id=${recipe.id}`;
+            recipeLink.textContent = recipe.name;
+            nameCell.appendChild(recipeLink);
+
+            const skillLevelCell = row.insertCell(2);
+            skillLevelCell.textContent = recipe.skillLevel;
+
+            const cookingTimeCell = row.insertCell(3);
+            cookingTimeCell.textContent = recipe.cookingTime;
+
+            const numberOfIngredientsCell = row.insertCell(4);
+            numberOfIngredientsCell.textContent = recipe.numIngrediente;
         });
     }
 };
+
 

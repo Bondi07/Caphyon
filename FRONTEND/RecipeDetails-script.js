@@ -11,42 +11,69 @@ window.onload = function () {
             document.getElementById('description').textContent = recipeDetails.description;
             document.getElementById('cookingTime').textContent = recipeDetails.cookingTime;
             document.getElementById('preparationTime').textContent = recipeDetails.preparationTime;
+            document.getElementById('skillLevel').textContent = recipeDetails.skillLevel;
 
-            // Update ingredients list
+           // Update ingredients list
             const ingredientsList = document.getElementById('ingredientsList');
-            ingredientsList.innerHTML = ''; // Clear previous list
-            recipeDetails.ingredients.forEach(ingredient => {
+            ingredientsList.innerHTML = ''; 
+            if (recipeDetails.ingredients.length === 0) {
                 const li = document.createElement('li');
-                li.textContent = ingredient;
+                li.textContent = 'None'; 
                 ingredientsList.appendChild(li);
-            });
+            } else {
+                recipeDetails.ingredients.forEach(ingredient => {
+                    const li = document.createElement('li');
+                    li.textContent = ingredient;
+                    ingredientsList.appendChild(li);
+                });
+            }
 
             // Update collections list
             const collectionsList = document.getElementById('collections');
-            collectionsList.innerHTML = ''; // Clear previous list
-            recipeDetails.collections.forEach(collection => {
+            collectionsList.innerHTML = ''; 
+            if (recipeDetails.collections.length === 0) {
                 const li = document.createElement('li');
-                li.textContent = collection;
+                li.textContent = 'None'; 
                 collectionsList.appendChild(li);
-            });
+            } else {
+                recipeDetails.collections.forEach(collection => {
+                    const li = document.createElement('li');
+                    li.textContent = collection;
+                    collectionsList.appendChild(li);
+                });
+            }
 
             // Update keywords list
             const keywordsList = document.getElementById('keywords');
-            keywordsList.innerHTML = ''; // Clear previous list
-            recipeDetails.keywords.forEach(keyword => {
+            keywordsList.innerHTML = ''; 
+            if (recipeDetails.keywords.length === 0) {
                 const li = document.createElement('li');
-                li.textContent = keyword;
+                li.textContent = 'None'; 
                 keywordsList.appendChild(li);
-            });
+            } else {
+                recipeDetails.keywords.forEach(keyword => {
+                    const li = document.createElement('li');
+                    li.textContent = keyword;
+                    keywordsList.appendChild(li);
+                });
+            }
 
             // Update diet types list
             const dietTypesList = document.getElementById('dietTypes');
-            dietTypesList.innerHTML = ''; // Clear previous list
-            recipeDetails.dietTypes.forEach(dietType => {
+            dietTypesList.innerHTML = ''; 
+            if (recipeDetails.dietTypes.length === 0) {
                 const li = document.createElement('li');
-                li.textContent = dietType;
+                li.textContent = 'None'; // or '/'
                 dietTypesList.appendChild(li);
-            });
+            } else {
+                recipeDetails.dietTypes.forEach(dietType => {
+                    const li = document.createElement('li');
+                    li.textContent = dietType;
+                    dietTypesList.appendChild(li);
+                });
+            }
+
+
 
             // Fetch similar recipes and update HTML
             fetchSimilarRecipes(recipeId)
@@ -61,25 +88,13 @@ window.onload = function () {
                 })
                 .catch(error => {
                     console.error('Error fetching similar recipes:', error);
-                });
+            });
         })
         .catch(error => {
             console.error('Error fetching recipe details:', error);
         });
 };
 
-// Function to calculate similarity factor
-function calculateSimilarity(recipe1, recipe2) {
-    // Similarity based on number of ingredients
-    const ingredientSimilarity = 1 - Math.abs(recipe1.ingredients.length - recipe2.numberOfIngredients) / Math.max(recipe1.ingredients.length, recipe2.numberOfIngredients);
-    // Similarity based on skill level
-    const skillLevelSimilarity = recipe1.skillLevel === recipe2.skillLevel ? 1 : 0;
-    // You can adjust the weights according to your preference
-    const ingredientWeight = 0.6;
-    const skillLevelWeight = 0.4;
-    // Combine similarities with weights
-    return (ingredientWeight * ingredientSimilarity) + (skillLevelWeight * skillLevelSimilarity);
-}
 
 // Function to fetch recipe details based on ID
 async function fetchRecipeDetails(recipeId) {

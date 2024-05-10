@@ -19,17 +19,19 @@
         <a href="#">Details</a>
     </div>
 
+    <!-- SEARCH / SORB BY NAME / SORT BY ING >< SKILLL -->
     <div class="search">
         <div class="left">
             <input type="text" id="recipeName" placeholder="Enter recipe name...">
-            <button id="searchButton"><img src="./PICTURES/search.png" alt="search logo" width="30px" height="30px"></button>
+            <button id="searchByNameButton" onclick="filterRecipes()"><img src="./PICTURES/search.png" alt="search logo" width="30px" height="30px"></button>
         </div>        
         <div class="right">
             <input type="text" id="filterBy" placeholder="Filter by...">
-            <button id="searchButton" onclick="filterByIngredients()"><img src="./PICTURES/filterBy.png" alt="filter by logo" width="30px" height="30px"></button>
+            <button id="filterByIngredientsButton" onclick="filterRecipes()"><img src="./PICTURES/filterBy.png" alt="filter by logo" width="30px" height="30px"></button>
         </div>
     </div>
 
+    <!-- TABLE OF RECIPES -->
     <div class="container">
         <div class="tableOfRecipes">
             <h2>Table of Recipes:</h2>
@@ -47,24 +49,53 @@
                 </tbody>
             </table>
         </div>
-        <div class="topElementsTable">
-            <h2>Top Elements:</h2>
-            <table id="topElementsTable" border="1">
-                <thead>
-                    <tr>
-                        <th>Rank</th>
-                        <th>Top Ingredients</th>
-                        <th>Recipe Count</th>
-                        <th>Top Authors</th>
-                        <th>Recipe Count</th>
-                        <th>Top Recipes</th>
-                    </tr>
-                </thead>
-                <tbody id="topElementsBody">
-                    
-                </tbody>
-            </table>
-        </div>        
+
+        <!-- TOP 5 MOST TABLES  -->
+        <div class="top5Container">
+            <div class="topElementsTable">
+                <h2>Top 5 Most Common Ingredients:</h2>
+                <table id="topIngredientsTable" border="1">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Name</th>
+                            <th>Recipe Count</th>
+                        </tr>
+                    </thead>
+                    <tbody id="topIngredientsBody"></tbody>
+                </table>
+            </div>
+        
+            <div class="topElementsTable">
+                <h2>Top 5 Prolific Authors:</h2>
+                <table id="topAuthorsTable" border="1">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Name</th>
+                            <th>Recipe Count</th>
+                        </tr>
+                    </thead>
+                    <tbody id="topAuthorsBody"></tbody>
+                </table>
+            </div>
+        
+            <div class="topElementsTable">
+                <h2>Top 5 Recipes:</h2>
+                <table id="topRecipesTable" border="1">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Name</th>
+                            <th>Skill Level</th>
+                            <th>Cooking Time</th>
+                            <th>Number Of Ingredients</th>
+                        </tr>
+                    </thead>
+                    <tbody id="topRecipesBody"></tbody>
+                </table>
+            </div>        
+        </div>
     </div>
     <div id="pagination">
         <button id="prevPage">Previous Page</button>
@@ -77,11 +108,7 @@
         <p>All rights reserved &copy; 2024 Bondokic Nikola</p>
     </footer>
 
-
-
-
-
-
+    <!-- SCRIPT FILE FOR HOME PAGE  -->
     <script src="HomePage.js"></script>
 </body>
 </html>
