@@ -40,10 +40,16 @@ function fetchAndRenderRecipes(pageNumber) {
                     <table>
                         <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>Author</th>
-                                <th>Number of Ingredients</th>
-                                <th>Skill Level</th>
+                            <th>Name</th>
+                            <th>Author</th>
+                            <th>
+                                Number of Ingredients
+                                <button id="sortByIngredients">Sort</button>
+                            </th>
+                            <th>
+                                Skill Level
+                                <button id="sortBySkillLevel">Sort</button>
+                            </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -130,6 +136,8 @@ function handleAuthorClick(authorName) {
 }
 
 
+
+
 /* FILTER BY INGREDIENT AND SEARCH FUNCTION */
 
 async function filterRecipes() {
@@ -148,6 +156,37 @@ window.addEventListener('load', async () => {
         updateFilterInput(ingredients);
     }
 });
+
+
+
+
+/* SORTING BY NUMBER OF INGREDIENTS AND SKILL LEVEL */
+
+
+async function sortRecipesByNumberOfIngredients() {
+    sortBy = "NumberOfIngredients";
+    sortOrder = sortOrder === 0 ? 1 : 0; 
+    fetchAndRenderRecipes(currentPage);
+}
+
+function sortRecipesBySkillLevel() {
+    sortBy = "SkillLevel";
+    sortOrder = sortOrder === 0 ? 1 : 0; 
+    fetchAndRenderRecipes(currentPage);
+}
+
+document.getElementById('sortByIngredients').addEventListener('click', sortRecipesByNumberOfIngredients);
+document.getElementById('sortBySkillLevel').addEventListener('click', sortRecipesBySkillLevel);
+
+
+window.addEventListener('load', async () => {
+    const recipesData = await sortRecipesByNumberOfIngredients();
+    if (recipesData) {
+        const sortRequest = recipesData.sortRequest;
+        updateFilterInput(sortRequest);
+    }
+});
+
 
 
 
