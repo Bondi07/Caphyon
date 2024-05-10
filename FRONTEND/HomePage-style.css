@@ -124,7 +124,7 @@ a:hover{
 }
 /* TABLE OF RECIPES */
 .tableOfRecipes {
-    margin-left: 50px;
+    margin-left: 40px;
     margin-right: 50px;
 
 }
@@ -138,7 +138,26 @@ a:hover{
 .tableOfRecipes th, .tableOfRecipes td {
     padding: 10px; 
     border: 1px solid black; 
+    margin-left: 10px;
     text-align: center; 
+    font-size: 18px;
+    width: 30%;
+}
+.tableOfRecipes th{
+    background-color: #8a8686;
+    color: black;
+    padding: 10px 0 10px 0;
+
+}
+.tableOfRecipes th button{
+    color: black;
+    background-color: #C40C0C;
+    padding: 5px;
+    margin-top: 5px;
+}
+
+.tableOfRecipes tr:hover {
+    background-color: whitesmoke;
 }
 
 .tableOfRecipes h2{
