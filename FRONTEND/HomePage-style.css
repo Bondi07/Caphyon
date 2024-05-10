@@ -115,27 +115,18 @@ a:hover{
 .right{
     margin-right: 150px;
 }
-.search .left button:hover{
-    background-color: #CAF4FF;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    justify-content: center;
-    text-align: center;
-}
+
 
 /* TABLE OF RECIPES */
 .container {
     display: flex;
     justify-content: space-between;
 }
-.topElementsTable {
-    width: 50%; 
-}
-
+/* TABLE OF RECIPES */
 .tableOfRecipes {
-    margin-left: 80px;
-    width: 60%; 
+    margin-left: 50px;
+    margin-right: 50px;
+
 }
 
 .tableOfRecipes table {
@@ -149,28 +140,14 @@ a:hover{
     border: 1px solid black; 
     text-align: center; 
 }
-.tableOfRecipes td:nth-child(1) {
-    width: 40%;
-}
-.tableOfRecipes td:nth-child(2) {
-    width: 30%;
-}
-.tableOfRecipes td:nth-child(3) {
-    width: 15%;
-}
-.tableOfRecipes td:nth-child(4) {
-    width: 15%;
-}
+
 .tableOfRecipes h2{
-    margin-top: 50px;
-    margin-bottom: 50px;
-    margin-left: 50px;
+    margin: 50px 0 50px 50px;
     font-size: 40px;
     font-family: "Poetsen One", sans-serif;
     font-weight: 300;
     font-style: normal;
 }
-
 
 
 /* TOP ELEMENT TABLE */
@@ -189,44 +166,23 @@ a:hover{
 .topElementsTable th,
 .topElementsTable td {
     padding: 10px;
-    border: 1px solid black;
     text-align: center;
 }
 
-/* Set width for Rank and Top Ingredients */
-.topElementsTable th:nth-child(1),
-.topElementsTable td:nth-child(1),
-.topElementsTable th:nth-child(2),
-.topElementsTable td:nth-child(2) {
-    width: 15%;
+/* TOP ELEMENTS TABLE WIDTH */
+.topElementsTable{
+    width: 80%;
 }
-
-/* Set width for Recipe Count */
-.topElementsTable th:nth-child(3),
-.topElementsTable td:nth-child(3),
-.topElementsTable th:nth-child(5),
-.topElementsTable td:nth-child(5) {
-    width: 15%;
-}
-
-/* Set width for Top Authors */
-.topElementsTable th:nth-child(4),
-.topElementsTable td:nth-child(4) {
+.topElementsTable td{
     width: 20%;
 }
 
-/* Set width for Top Recipes */
-.topElementsTable th:nth-child(6),
-.topElementsTable td:nth-child(6) {
-    width: 50%;
-}
 
 /* PAGINARE */
 #pagination {
     text-align: center;
     margin: 50px;
 }
-
 #pagination button {
     background-color: #4CAF50;
     border: none;

@@ -10,7 +10,7 @@ let sortBy = "RecipeName";
 let ingredients = [];
 
 
-function fetchAndRenderRecipes(pageNumber) {
+async function fetchAndRenderRecipes(pageNumber) {
     let http = new XMLHttpRequest();
 
     let data = {
@@ -44,11 +44,11 @@ function fetchAndRenderRecipes(pageNumber) {
                             <th>Author</th>
                             <th>
                                 Number of Ingredients
-                                <button id="sortByIngredients">Sort</button>
+                                <button id="sortByIngredients" onclick="sortRecipesByNumberOfIngredients()">Sort</button>
                             </th>
                             <th>
                                 Skill Level
-                                <button id="sortBySkillLevel">Sort</button>
+                                <button id="sortBySkillLevel" onclick="sortRecipesBySkillLevel()">Sort</button>
                             </th>
                             </tr>
                         </thead>
@@ -146,11 +146,11 @@ async function filterRecipes() {
     ingredients = listOfIngredients;
     recipeName = document.getElementById('recipeName').value.trim();
 
-    fetchAndRenderRecipes(1);
+    await fetchAndRenderRecipes(1);
 }
 
 window.addEventListener('load', async () => {
-    const recipesData = await fetchRecipes();
+    const recipesData = await filterRecipes();
     if (recipesData) {
         const ingredients = recipesData.ingredients;
         updateFilterInput(ingredients);
@@ -163,29 +163,27 @@ window.addEventListener('load', async () => {
 /* SORTING BY NUMBER OF INGREDIENTS AND SKILL LEVEL */
 
 
+// Sort recipes by number of ingredients
 async function sortRecipesByNumberOfIngredients() {
-    sortBy = "NumberOfIngredients";
+    sortBy = "IngredientsCount";
     sortOrder = sortOrder === 0 ? 1 : 0; 
-    fetchAndRenderRecipes(currentPage);
+    await fetchAndRenderRecipes(currentPage);
 }
 
-function sortRecipesBySkillLevel() {
+// Sort recipes by skill level
+async function sortRecipesBySkillLevel() {
     sortBy = "SkillLevel";
     sortOrder = sortOrder === 0 ? 1 : 0; 
-    fetchAndRenderRecipes(currentPage);
+    await fetchAndRenderRecipes(currentPage);
 }
 
-document.getElementById('sortByIngredients').addEventListener('click', sortRecipesByNumberOfIngredients);
-document.getElementById('sortBySkillLevel').addEventListener('click', sortRecipesBySkillLevel);
+// Fetch and render recipes when the window loads
+window.onload = async function () {
+    console.log("Page loaded. Fetching and rendering recipes...");
+    fetchAndRenderRecipes(currentPage);
+};
 
 
-window.addEventListener('load', async () => {
-    const recipesData = await sortRecipesByNumberOfIngredients();
-    if (recipesData) {
-        const sortRequest = recipesData.sortRequest;
-        updateFilterInput(sortRequest);
-    }
-});
 
 
 

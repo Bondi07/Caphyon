@@ -15,19 +15,18 @@
         <h1>Recipes Glossary</h1>
     </div>
     <div class="linksToPages">
-        <a href="#">Home</a>
-        <a href="#">Details</a>
+        <a href="HomePage.html">Home</a>
     </div>
 
     <!-- SEARCH / SORB BY NAME / SORT BY ING >< SKILLL -->
     <div class="search">
         <div class="left">
             <input type="text" id="recipeName" placeholder="Enter recipe name...">
-            <button id="searchByNameButton" onclick="filterRecipes()"><img src="./PICTURES/search.png" alt="search logo" width="30px" height="30px"></button>
+            <button id="searchByNameButton" onclick="filterRecipes()"><img src="./PICTURES/search.png" alt="search logo" width="40px" height="40px"></button>
         </div>        
         <div class="right">
             <input type="text" id="filterBy" placeholder="Filter by...">
-            <button id="filterByIngredientsButton" onclick="filterRecipes()"><img src="./PICTURES/filterBy.png" alt="filter by logo" width="30px" height="30px"></button>
+            <button id="filterByIngredientsButton" onclick="filterRecipes()"><img src="./PICTURES/filterBy.png" alt="filter by logo" width="40px" height="40px"></button>
         </div>
     </div>
 
@@ -42,16 +41,16 @@
                         <th>Author</th>
                         <th>
                             Number of Ingredients
-                            <button id="sortByIngredients">Sort</button>
+                            <button id="sortByIngredients" onclick="sortRecipesByNumberOfIngredients()">Sort</button>
                         </th>
                         <th>
                             Skill Level
-                            <button id="sortBySkillLevel">Sort</button>
+                            <button id="sortBySkillLevel" onclick="sortRecipesBySkillLevel()">Sort</button>
                         </th>
                     </tr>
                 </thead>
                 <tbody id="recipeBody">
-
+                    
                 </tbody>
             </table>
         </div>
