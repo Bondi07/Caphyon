@@ -40,8 +40,8 @@ async function fetchAndRenderRecipes(pageNumber) {
                     <table>
                         <thead>
                             <tr>
-                            <th>Name</th>
-                            <th>Author</th>
+                            <th>Recipes Name</th>
+                            <th>Authors Name</th>
                             <th>
                             Number of Ingredients
                             <div class="button-container">
