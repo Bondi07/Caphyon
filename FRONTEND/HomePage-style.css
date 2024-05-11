@@ -1,4 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Poetsen+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Freeman&family=Poetsen+One&family=Quicksand:wght@300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oooh+Baby&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oooh+Baby&family=Poetsen+One&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 
 *{
@@ -6,6 +9,14 @@
     padding: 0;
 }
 
+::selection{
+    background-color: #FFDB5C;
+}
+body{
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
 a{
     color: black;
     text-decoration: none;
@@ -17,6 +28,44 @@ a:visited{
 a:hover{
     color: #00215E;
     text-decoration: none
+}
+
+/* topMessage*/
+.topMessage{
+    background-color: rgba(114, 63, 95, 0.9);
+    color: white;
+    padding: 5px;
+    font-weight: 800;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.topMessage img {
+    padding-right: 10px;
+    vertical-align: middle;
+}
+/* MESSAGE FOR ALL */
+.messageForALl{
+    padding: 50px 0 50px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #e8e9eb; /* change the color */
+    border-bottom: 2px solid black;
+}
+.messageForALl p{
+    font-size: 30px;
+    font-family: "Poetsen One", sans-serif;
+    font-weight: 400;
+    
+}
+.messageForALl span{
+    font-family: "Oooh Baby", cursive;
+    font-weight: 400;
+    font-style: normal;
+    padding-left: 5px;
+    font-size: 40px;
 }
 
 /* TOP NAV BAR PENTRU NUME SI POZA  */
@@ -50,25 +99,6 @@ a:hover{
     font-family: "Poetsen One", sans-serif;
     font-weight: 400;
     font-style: normal;
-}
-/* LINCKS TOP NAV BAR */
-.linksToPages {
-    text-align: center;
-    margin-top: 50px;
-}
-
-.linksToPages a {
-    margin: 0 10px;
-    text-decoration: none;
-    color: black;
-    font-size: 20px;
-    font-family: "Poetsen One", sans-serif;
-    font-weight: 300;
-    font-style: normal;
-}
-
-.linksToPages a:hover {
-    color: #8a8686;
 }
 
 /* SEARCH */
@@ -116,7 +146,6 @@ a:hover{
     margin-right: 150px;
 }
 
-
 /* TABLE OF RECIPES */
 .container {
     display: flex;
@@ -126,34 +155,63 @@ a:hover{
 .tableOfRecipes {
     margin-left: 40px;
     margin-right: 50px;
-
 }
-
+.tableOfRecipes a{
+    color: #008DDA;
+    font-size: 20px;
+}
+.tableOfRecipes a:hover{
+    color: #00215E;
+    font-size: 20px;
+}
 .tableOfRecipes table {
     border-collapse: collapse; 
     width: 100%; 
     margin-top: 50px;
-}
-
-.tableOfRecipes th, .tableOfRecipes td {
-    padding: 10px; 
-    border: 1px solid black; 
-    margin-left: 10px;
-    text-align: center; 
-    font-size: 18px;
-    width: 30%;
+    font-size: 15px;
+    font-family: "Poppins", sans-serif;
+    font-weight: 300;
 }
 .tableOfRecipes th{
-    background-color: #8a8686;
+    background-color: #C7C8CC;
     color: black;
     padding: 10px 0 10px 0;
-
+    border-bottom: 3px solid black;
+    font-size: 20px;
 }
-.tableOfRecipes th button{
-    color: black;
-    background-color: #C40C0C;
-    padding: 5px;
+.button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     margin-top: 5px;
+}
+
+.button-container button {
+    background-color: #4CAF50;
+    padding: 5px;
+}
+.button-container button img {
+    width: 20px;
+    height: 20px;
+    justify-content: center;
+    align-items: center;
+    vertical-align: middle;
+}
+.button-container #sortBySkillLevel{
+    margin-top: 30px;
+}
+.button-container button:hover {
+    background-color: #7ABA78;
+}
+
+.tableOfRecipes td {
+    padding: 10px; 
+    border-bottom: 1px solid black; 
+    text-align: center; 
+    font-size: 18px;
+    width: 20%;
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
 }
 
 .tableOfRecipes tr:hover {
@@ -173,6 +231,24 @@ a:hover{
 
 .topElementsTable{
     margin-right: 50px;
+    
+}
+.topElementsTable table{
+    border-collapse: collapse; 
+    margin-top: 50px;
+    font-size: 15px;
+    font-family: "Poppins", sans-serif;
+    font-weight: 300;
+    width: 80%;
+    border-collapse: collapse; 
+}
+.topElementsTable a{
+    color: #008DDA;
+    font-size: 20px;
+}
+.topElementsTable a:hover{
+    color: #00215E;
+    font-size: 20px;
 }
 .topElementsTable h2{
     margin-top: 50px;
@@ -182,18 +258,75 @@ a:hover{
     font-weight: 300;
     font-style: normal;
 }
-.topElementsTable th,
 .topElementsTable td {
     padding: 10px;
     text-align: center;
+    padding: 10px; 
+    border-bottom: 1px solid black; 
+    text-align: center; 
+    font-size: 20px;
+    width: 20%;
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+}
+.topElementsTable th{
+    padding: 10px;
+    text-align: center;
+    background-color: #C7C8CC;
+    color: black;
+    padding: 10px 0 10px 0;
+    border-bottom: 3px solid black;
+    font-size: 20px;
+}
+.topElementsTable tr:hover {
+    background-color: whitesmoke;
+}
+/* TOP 5 RECIPE TABLE  */
+.topRecipeTable {
+    margin: 0 80px 0 0 ;
+}
+.topRecipeTable a{
+    color: #008DDA;
+    font-size: 18px;
+}
+.topRecipeTable a:hover{
+    color: #00215E;
+}
+.topRecipeTable table {
+    border-collapse: collapse; 
+    width: 100%; 
+    margin-top: 50px;
+    font-size: 15px;
+    font-family: "Poppins", sans-serif;
+    font-weight: 300;
+}
+.topRecipeTable th{
+    background-color: #C7C8CC;
+    color: black;
+    padding: 10px 0 10px 0;
+    border-bottom: 3px solid black;
+    font-size: 20px;
+}
+.topRecipeTable td {
+    padding: 10px; 
+    border-bottom: 1px solid black; 
+    text-align: center; 
+    font-size: 18px;
+    width: 20%;
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
 }
 
-/* TOP ELEMENTS TABLE WIDTH */
-.topElementsTable{
-    width: 80%;
+.topRecipeTable tr:hover {
+    background-color: whitesmoke;
 }
-.topElementsTable td{
-    width: 20%;
+
+.topRecipeTable h2{
+    margin-top: 50px;
+    font-size: 40px;
+    font-family: "Poetsen One", sans-serif;
+    font-weight: 300;
+    font-style: normal;
 }
 
 
@@ -221,10 +354,46 @@ a:hover{
     background-color: #0A6847;
 }
 
+/* POWERED BY */
+.powered-by {
+    display: flex;
+    margin-left: 20px;
+    margin-bottom: 5px;
+}
+.powered-by p {
+    margin-right: 10px;
+    font-size: 20px;
+    font-family: "Poppins", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+}
+.powered-by img {
+    width: 100px; /* Adjust the width of the image as needed */
+    height: auto; /* Maintain aspect ratio */
+}
 
+/* GO TO TOP BUTTON */
+#goTopBtn {
+    display: none; 
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    background: transparent; 
+    padding: 0; 
+}
+
+#goTopBtn:hover {
+    opacity: 0.8; 
+}
 
 /* FOOTER */
 footer {
+    position: static;
+    bottom: 0;
+    left: 0;
     background-color: black;
     color: white;
     text-align: center;

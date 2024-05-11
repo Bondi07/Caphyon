@@ -43,7 +43,6 @@ a:hover{
     border-radius: 50%;
     margin-top: 40px;
 }
-
 .TopNavBar h1 {
     margin: 0; 
     z-index: 2;
@@ -52,6 +51,27 @@ a:hover{
     font-weight: 400;
     font-style: normal;
 }
+/* LINCKS TOP NAV BAR */
+.linksToPages {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.linksToPages a {
+    margin: 0 10px;
+    text-decoration: none;
+    color: black;
+    font-size: 30px;
+    font-family: "Poetsen One", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+}
+
+.linksToPages a:hover {
+    color: #8a8686;
+    border-bottom: #00215E 2px dashed;
+}
+
 
 /* DETAIL LIST */
 .container{
@@ -90,7 +110,18 @@ a:hover{
     margin: 50px;
 
 }
+ul{
+    margin: 50px 0 50px 0;
+    list-style: none;
+}
+ul li {
+    font-size: 20px;
+    padding: 10px 0  10px 0 ;
+}
+ul li::marker{
+    content: ' ▶️ ';
 
+}
 
 
 

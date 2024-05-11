@@ -10,13 +10,18 @@
 </head>
 <body>
 
+    <div class="topMessage">
+        <p><img src="./PICTURES/hearth.png" alt="hearth" width="15px" height="15px">Get The Best Recipes </p>
+    </div>
     <div class="TopNavBar">
         <a href="HomePage.html"><img src="./PICTURES/logoName.png" alt="Logo Name Picture" ></a>
         <h1>Recipes Glossary</h1>
     </div>
-    <div class="linksToPages">
-        <a href="HomePage.html">Home</a>
+
+    <div class="messageForALl">
+        <p>SIMPLE RECIPES MADE FOR <span> real, actual, everyday life .</span></p>
     </div>
+
 
     <!-- SEARCH / SORB BY NAME / SORT BY ING >< SKILLL -->
     <div class="search">
@@ -25,7 +30,7 @@
             <button id="searchByNameButton" onclick="filterRecipes()"><img src="./PICTURES/search.png" alt="search logo" width="40px" height="40px"></button>
         </div>        
         <div class="right">
-            <input type="text" id="filterBy" placeholder="Filter by...">
+            <input type="text" id="filterBy" placeholder="Filter by ingredients...">
             <button id="filterByIngredientsButton" onclick="filterRecipes()"><img src="./PICTURES/filterBy.png" alt="filter by logo" width="40px" height="40px"></button>
         </div>
     </div>
@@ -34,18 +39,22 @@
     <div class="container">
         <div class="tableOfRecipes">
             <h2>Table of Recipes:</h2>
-            <table id="recipeTable" border="1">
+            <table id="recipeTable">
                 <thead>
                     <tr>
                         <th>Name</th>
                         <th>Author</th>
                         <th>
                             Number of Ingredients
-                            <button id="sortByIngredients" onclick="sortRecipesByNumberOfIngredients()">Sort</button>
+                            <div class="button-container">
+                                <button id="sortByIngredients" onclick="sortRecipesByNumberOfIngredients()"><img src="./PICTURES/filterBy.png" alt="filterBy"></button>
+                            </div>
                         </th>
                         <th>
                             Skill Level
-                            <button id="sortBySkillLevel" onclick="sortRecipesBySkillLevel()">Sort</button>
+                            <div class="button-container">
+                                <button id="sortBySkillLevel" onclick="sortRecipesBySkillLevel()"><img src="./PICTURES/filterBy.png" alt="filterBy"></button>
+                            </div>
                         </th>
                     </tr>
                 </thead>
@@ -59,7 +68,7 @@
         <div class="top5Container">
             <div class="topElementsTable">
                 <h2>Top 5 Most Common Ingredients:</h2>
-                <table id="topIngredientsTable" border="1">
+                <table id="topIngredientsTable">
                     <thead>
                         <tr>
                             <th>Rank</th>
@@ -73,7 +82,7 @@
         
             <div class="topElementsTable">
                 <h2>Top 5 Prolific Authors:</h2>
-                <table id="topAuthorsTable" border="1">
+                <table id="topAuthorsTable">
                     <thead>
                         <tr>
                             <th>Rank</th>
@@ -85,9 +94,9 @@
                 </table>
             </div>
         
-            <div class="topElementsTable">
+            <div class="topRecipeTable">
                 <h2>Top 5 Recipes:</h2>
-                <table id="topRecipesTable" border="1">
+                <table id="topRecipesTable">
                     <thead>
                         <tr>
                             <th>Rank</th>
@@ -107,6 +116,14 @@
         <button id="nextPage">Next Page</button>
     </div>
     
+
+    <div class="powered-by">
+        <p>This project is powered by</p>
+        <img src="./PICTURES/capy.png" alt="Powered by Caphyon" width="350px" height="80px">
+    </div>
+
+    <!-- GO TO TOP BUTTON -->
+    <button onclick="goToTop()" id="goTopBtn" title="Go to top"><img src="./PICTURES/goToTop.png" alt="go to top button picture" width="40px" height="40px"></button>
 
 
     <footer>

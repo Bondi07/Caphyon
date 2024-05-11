@@ -43,12 +43,16 @@ async function fetchAndRenderRecipes(pageNumber) {
                             <th>Name</th>
                             <th>Author</th>
                             <th>
-                                Number of Ingredients
-                                <button id="sortByIngredients" onclick="sortRecipesByNumberOfIngredients()">Sort</button>
+                            Number of Ingredients
+                            <div class="button-container">
+                                <button id="sortByIngredients" onclick="sortRecipesByNumberOfIngredients()"><img src="./PICTURES/filterBy.png" alt="filterBy" width="30px" height="30px"></button>
+                            </div>
                             </th>
                             <th>
                                 Skill Level
-                                <button id="sortBySkillLevel" onclick="sortRecipesBySkillLevel()">Sort</button>
+                                <div class="button-container">
+                                    <button id="sortBySkillLevel" onclick="sortRecipesBySkillLevel()"><img src="./PICTURES/filterBy.png" alt="filterBy"></button>
+                                </div>
                             </th>
                             </tr>
                         </thead>
@@ -226,8 +230,10 @@ window.onload = function () {
             const row = topIngredientsBody.insertRow();
             const rankCell = row.insertCell(0);
             rankCell.textContent = index + 1;
+
             const nameCell = row.insertCell(1);
             nameCell.textContent = ingredient.name;
+
             const recipeCountCell = row.insertCell(2);
             recipeCountCell.textContent = ingredient.recipeCount;
         });
@@ -282,4 +288,26 @@ window.onload = function () {
     }
 };
 
+
+
+/* GO TO TOP BUTTON */
+window.onscroll = function() {
+    scrollFunction();
+};
+
+function scrollFunction() {
+    var btn = document.getElementById("goTopBtn");
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        btn.style.display = "block";
+    } else {
+        btn.style.display = "none";
+    }
+}
+
+function goToTop() {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+}
 

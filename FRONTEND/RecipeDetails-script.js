@@ -82,12 +82,26 @@ window.onload = function () {
                     similarRecipesList.innerHTML = ''; 
                     similarRecipes.forEach(similarRecipe => {
                         const li = document.createElement('li');
-                        li.textContent = `${similarRecipe.name} (Ingredients: ${similarRecipe.numberOfIngredients}, Skill Level: ${similarRecipe.skillLevel})`;
+                        const nameElement = document.createElement('span');
+                        nameElement.textContent = similarRecipe.name;
+                        const ingredientsElement = document.createElement('span');
+                        ingredientsElement.textContent = `Number of Ingredients: ${similarRecipe.numberOfIngredients}`;
+                        const skillLevelElement = document.createElement('span');
+                        skillLevelElement.textContent = `Skill Level: ${similarRecipe.skillLevel}`;
+
+                        // Append name, ingredients, and skill level elements to the list item
+                        li.appendChild(nameElement);
+                        li.appendChild(document.createElement('br')); // Add line break
+                        li.appendChild(ingredientsElement);
+                        li.appendChild(document.createElement('br')); // Add line break
+                        li.appendChild(skillLevelElement);
+
+                        // Append the list item to the list
                         similarRecipesList.appendChild(li);
                     });
                 })
-                .catch(error => {
-                    console.error('Error fetching similar recipes:', error);
+            .catch(error => {
+                console.error('Error fetching similar recipes:', error);
             });
         })
         .catch(error => {

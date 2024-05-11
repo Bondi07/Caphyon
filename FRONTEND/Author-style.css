@@ -51,27 +51,83 @@ a:hover{
     font-weight: 400;
     font-style: normal;
 }
+
+.linksToPages {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.linksToPages a {
+    margin: 0 10px;
+    text-decoration: none;
+    color: black;
+    font-size: 30px;
+    font-family: "Poetsen One", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+}
+
+.linksToPages a:hover {
+    color: #8a8686;
+    border-bottom: #00215E 2px dashed;
+}
+
 /* CONTAINER AUTHOR */
 .tableOfAuthorsRecipes{
     margin-top: 150px;
-    margin-left: 150px;
+    margin-left: auto; 
+    margin-right: auto;
+    width: 80%; 
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
 }
 
-.tableOfAuthorsRecipes h1{
+.tableOfAuthorsRecipes h2{
     font-size: 30px;
+    margin-bottom:20px ;
+    font-family: "Poppins", sans-serif;
+    font-weight: 300;
+    font-style: normal;
 
 }
-#recipeList ul{
-    padding-top: 50px;
-    padding-left: 50px;
-    margin-bottom: 50px;
+.tableOfAuthorsRecipes span{
+    padding-left: 10px;
+    font-size: 35px;
+    font-family: "Poetsen One", sans-serif;
+    font-weight: 300;
+    font-style: normal;
 }
-#recipeList ul li{
+/* TABLE */
+.tableOfAuthorsRecipes table {
+    border-collapse: collapse; 
+    width: 80%; 
+    margin-top: 50px;
+    font-size: 15px;
+    font-family: "Poppins", sans-serif;
+    font-weight: 300;
+
+}
+.tableOfAuthorsRecipes th{
+    background-color: #C7C8CC;
+    color: black;
+    padding: 10px 0 10px 0;
+    border-bottom: 3px solid black;
     font-size: 20px;
-    line-height: 35px;
-    
+}
+.tableOfAuthorsRecipes td {
+    padding: 10px; 
+    border-bottom: 1px solid black; 
+    text-align: center; 
+    font-size: 18px;
+    width: 20%;
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
 }
 
+.tableOfAuthorsRecipes tr:hover {
+    background-color: whitesmoke;
+}
 
 /* PAGINARE */
 #pagination {
@@ -98,22 +154,11 @@ a:hover{
     background-color: #0A6847;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* FOOTER */
 footer {
+    position: static;
+    bottom: 0;
+    left: 0;
     background-color: black;
     color: white;
     text-align: center;
