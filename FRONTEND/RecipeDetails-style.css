@@ -120,11 +120,24 @@ ul li {
 }
 ul li::marker{
     content: ' ▶️ ';
-
 }
 
+/* GO TO TOP BUTTON */
+#goTopBtn {
+    display: none; 
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    background: transparent; 
+    padding: 0; 
+}
 
-
+#goTopBtn:hover {
+    opacity: 0.8; 
+}
 
 /* FOOTER */
 footer {
